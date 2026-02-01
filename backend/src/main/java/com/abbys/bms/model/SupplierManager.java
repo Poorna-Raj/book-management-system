@@ -18,7 +18,7 @@ public class SupplierManager extends User{
 
     private boolean onDuty;
 
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "manager")
     private List<Supplier> suppliers = new ArrayList<>();
 
     public List<Supplier> getSuppliers() {
@@ -29,12 +29,12 @@ public class SupplierManager extends User{
         this.suppliers = suppliers;
     }
 
-    public void addCustomer(Supplier supplier) {
+    public void addSupplier(Supplier supplier) {
         suppliers.add(supplier);
         supplier.setManager(this); // maintain both sides
     }
 
-    public void removeCustomer(Supplier supplier) {
+    public void removeSupplier(Supplier supplier) {
         suppliers.remove(supplier);
         supplier.setManager(null);
     }
