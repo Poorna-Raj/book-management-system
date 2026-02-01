@@ -23,7 +23,7 @@ public abstract class User {
 
     private String bankName;
 
-    private String role;
+    private Role role;
 
     public int getUserId() {
         return userId;
@@ -81,11 +81,11 @@ public abstract class User {
         this.bankName = bankName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }
