@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "tbl_customer_managers")
 public class CustomerManager extends User{
     @Column(unique = true)
-    private Long customerManagerId;
+    private String customerManagerId;
 
     private String workingHours;
 
@@ -15,11 +15,11 @@ public class CustomerManager extends User{
 
     private boolean onDuty;
 
-    public Long getCustomerManagerId() {
+    public String getCustomerManagerId() {
         return customerManagerId;
     }
 
-    public void setCustomerManagerId(Long customerManagerId) {
+    public void setCustomerManagerId(String customerManagerId) {
         this.customerManagerId = customerManagerId;
     }
 
