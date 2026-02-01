@@ -2,6 +2,9 @@ package com.abbys.bms.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_customer_managers")
 public class CustomerManager extends User{
@@ -14,6 +17,17 @@ public class CustomerManager extends User{
     private Shift shift;
 
     private boolean onDuty;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Customer> customers = new ArrayList<>();
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     public String getCustomerManagerId() {
         return customerManagerId;
