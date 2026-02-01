@@ -2,6 +2,9 @@ package com.abbys.bms.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_suppliers")
 public class Supplier {
@@ -30,6 +33,27 @@ public class Supplier {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private SupplierManager manager;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<Book> books = new ArrayList<>();
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+        book.setSupplier(this);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+        book.setSupplier(null);
+    }
 
     public Long getSupplierId() {
         return supplierId;
