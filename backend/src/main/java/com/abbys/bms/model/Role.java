@@ -1,5 +1,6 @@
 package com.abbys.bms.model;
 
 public enum Role {
-    CUSTOMER_MANAGER
+    CUSTOMER_MANAGER,
+    SUPPLIER_MANAGER
 }
