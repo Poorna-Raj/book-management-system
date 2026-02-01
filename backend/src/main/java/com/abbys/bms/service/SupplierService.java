@@ -46,7 +46,7 @@ public class SupplierService {
 
         supplierRepo.save(supplier);
 
-        manager.addCustomer(supplier);
+        manager.addSupplier(supplier);
         managerRepo.save(manager);
 
         return getSupplierDto(supplier);
