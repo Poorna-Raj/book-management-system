@@ -2,6 +2,9 @@ package com.abbys.bms.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_customers")
 public class Customer {
@@ -29,6 +32,17 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private CustomerManager manager;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerOrder> orders = new ArrayList<>();
+
+    public List<CustomerOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<CustomerOrder> orders) {
+        this.orders = orders;
+    }
 
     public CustomerManager getManager() {
         return manager;
