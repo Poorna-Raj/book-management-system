@@ -33,6 +33,18 @@ public class Book {
     @JoinColumn(name = "warehouse_keeper_id", nullable = true)
     private WarehouseKeeper warehouseKeeper;
 
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = true)
+    private Supplier supplier;
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
     public WarehouseKeeper getWarehouseKeeper() {
         return warehouseKeeper;
     }
