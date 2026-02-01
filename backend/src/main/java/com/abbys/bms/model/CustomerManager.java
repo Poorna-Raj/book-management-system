@@ -29,6 +29,16 @@ public class CustomerManager extends User{
         this.customers = customers;
     }
 
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+        customer.setManager(this); // maintain both sides
+    }
+
+    public void removeCustomer(Customer customer) {
+        customers.remove(customer);
+        customer.setManager(null);
+    }
+
     public String getCustomerManagerId() {
         return customerManagerId;
     }
