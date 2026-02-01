@@ -18,7 +18,7 @@ public class CustomerManager extends User{
 
     private boolean onDuty;
 
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "manager")
     private List<Customer> customers = new ArrayList<>();
 
     public List<Customer> getCustomers() {
@@ -31,7 +31,7 @@ public class CustomerManager extends User{
 
     public void addCustomer(Customer customer) {
         customers.add(customer);
-        customer.setManager(this); // maintain both sides
+        customer.setManager(this);
     }
 
     public void removeCustomer(Customer customer) {
