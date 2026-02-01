@@ -59,10 +59,11 @@ $(document).ready(function() {
             success: function(response) {
                 // Remove loading state
                 loginBtn.removeClass('loading');
+                console.log(response);
                 
                 // Store user data in localStorage
-                if (response.id) {
-                    localStorage.setItem('userId', response.id);
+                if (response.userId) {
+                    localStorage.setItem('userId', response.userId);
                 }
                 if (response.name) {
                     localStorage.setItem('userName', response.name);
@@ -86,7 +87,7 @@ $(document).ready(function() {
                 
                 // Redirect to dashboard after short delay
                 setTimeout(function() {
-                    window.location.href = '/dashboard.html'; // Update with your dashboard page
+                    window.location.href = '../customer/customer.html'; // Update with your dashboard page
                 }, 1000);
             },
             error: function(xhr, status, error) {
