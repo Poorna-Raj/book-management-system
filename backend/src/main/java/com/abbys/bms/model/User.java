@@ -23,6 +23,7 @@ public abstract class User {
 
     private String bankName;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public int getUserId() {
