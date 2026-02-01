@@ -87,7 +87,17 @@ $(document).ready(function() {
                 
                 // Redirect to dashboard after short delay
                 setTimeout(function() {
-                    window.location.href = '../customer/customer.html'; // Update with your dashboard page
+                    switch(response.role){
+                        case "CUSTOMER_MANAGER":
+                            window.location.href = '../customer/customer.html';
+                            break;
+                        case "SUPPLIER_MANAGER":
+                            window.location.href = '../supplier/supplier.html';
+                            break;
+                        default:
+                            console.log("Invalid Role");
+                            break;
+                    }
                 }, 1000);
             },
             error: function(xhr, status, error) {
