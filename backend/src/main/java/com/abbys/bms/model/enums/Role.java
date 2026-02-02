@@ -1,4 +1,4 @@
-package com.abbys.bms.model;
+package com.abbys.bms.model.enums;
 
 public enum Role {
     CUSTOMER_MANAGER,
