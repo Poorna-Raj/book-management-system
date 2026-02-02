@@ -1,4 +1,4 @@
-package com.abbys.bms.model;
+package com.abbys.bms.model.enums;
 
 public enum OrderStatus {
     PENDING,
