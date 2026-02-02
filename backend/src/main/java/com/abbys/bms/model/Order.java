@@ -1,5 +1,6 @@
 package com.abbys.bms.model;
 
+import com.abbys.bms.model.enums.OrderStatus;
 import jakarta.persistence.*;
 
 @Entity
