@@ -13,16 +13,16 @@ public class CustomerOrder extends Order{
     private String deadline;
 
     @OneToMany
-    @JoinTable(
-            name = "tbl_customer_order_books",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+    @JoinColumn(name = "order_id", nullable = false)
     private List<Book> books = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "cashier_id", nullable = false)
+    private Cashier cashier;
 
     public void setBooks(List<Book> books) {
         this.books = books;
