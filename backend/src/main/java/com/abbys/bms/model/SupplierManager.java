@@ -1,5 +1,6 @@
 package com.abbys.bms.model;
 
+import com.abbys.bms.model.enums.Shift;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
