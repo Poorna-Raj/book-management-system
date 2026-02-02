@@ -1,5 +1,7 @@
 package com.abbys.bms.model;
 
+import com.abbys.bms.model.enums.BookStatus;
+import com.abbys.bms.model.enums.BookType;
 import jakarta.persistence.*;
 
 @Entity
@@ -36,6 +38,18 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = true)
     private Supplier supplier;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "inventory_id", nullable = false)
+    private Inventory inventory;
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 
     public Supplier getSupplier() {
         return supplier;
