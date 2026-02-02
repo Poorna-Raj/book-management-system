@@ -1,6 +1,6 @@
 package com.abbys.bms.dto;
 
-import com.abbys.bms.model.Gender;
+import com.abbys.bms.model.enums.Gender;
 
 public class SupplierDto {
     private Long supplierId;
