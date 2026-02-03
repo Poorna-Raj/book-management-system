@@ -1,7 +1,7 @@
 package com.abbys.bms.controller;
 
-import com.abbys.bms.dto.CustomerCreateRequest;
-import com.abbys.bms.dto.CustomerDto;
+import com.abbys.bms.dto.customer.CustomerCreateRequest;
+import com.abbys.bms.dto.customer.CustomerDto;
 import com.abbys.bms.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
