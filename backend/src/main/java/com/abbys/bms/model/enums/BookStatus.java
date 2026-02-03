@@ -2,5 +2,7 @@ package com.abbys.bms.model.enums;
 
 public enum BookStatus {
     AVAILABLE,
-    UNAVAILABLE
+    OUT_OF_STOCK,
+    DISCONTINUED,
+    RESERVED
 }
