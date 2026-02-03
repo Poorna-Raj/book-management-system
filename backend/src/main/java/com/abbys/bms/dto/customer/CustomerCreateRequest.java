@@ -1,4 +1,4 @@
-package com.abbys.bms.dto;
+package com.abbys.bms.dto.customer;
 
 public class CustomerCreateRequest {
     private String customerName;
