@@ -1,6 +1,6 @@
 package com.abbys.bms.service;
 
-import com.abbys.bms.dto.LoginRequest;
+import com.abbys.bms.dto.user.LoginRequest;
 import com.abbys.bms.model.User;
 import com.abbys.bms.reposiotory.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

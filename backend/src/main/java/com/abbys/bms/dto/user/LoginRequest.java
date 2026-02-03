@@ -1,4 +1,4 @@
-package com.abbys.bms.dto;
+package com.abbys.bms.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

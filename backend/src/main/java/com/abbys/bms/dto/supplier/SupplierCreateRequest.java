@@ -1,4 +1,4 @@
-package com.abbys.bms.dto;
+package com.abbys.bms.dto.supplier;
 
 public class SupplierCreateRequest {
     private String companyName;

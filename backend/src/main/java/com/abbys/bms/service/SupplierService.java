@@ -1,7 +1,7 @@
 package com.abbys.bms.service;
 
-import com.abbys.bms.dto.SupplierCreateRequest;
-import com.abbys.bms.dto.SupplierDto;
+import com.abbys.bms.dto.supplier.SupplierCreateRequest;
+import com.abbys.bms.dto.supplier.SupplierDto;
 import com.abbys.bms.model.enums.Gender;
 import com.abbys.bms.model.enums.Role;
 import com.abbys.bms.model.Supplier;

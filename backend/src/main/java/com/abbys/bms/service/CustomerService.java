@@ -1,7 +1,7 @@
 package com.abbys.bms.service;
 
-import com.abbys.bms.dto.CustomerCreateRequest;
-import com.abbys.bms.dto.CustomerDto;
+import com.abbys.bms.dto.customer.CustomerCreateRequest;
+import com.abbys.bms.dto.customer.CustomerDto;
 import com.abbys.bms.model.Customer;
 import com.abbys.bms.model.CustomerManager;
 import com.abbys.bms.model.enums.Gender;

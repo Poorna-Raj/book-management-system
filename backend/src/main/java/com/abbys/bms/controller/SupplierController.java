@@ -1,7 +1,7 @@
 package com.abbys.bms.controller;
 
-import com.abbys.bms.dto.SupplierCreateRequest;
-import com.abbys.bms.dto.SupplierDto;
+import com.abbys.bms.dto.supplier.SupplierCreateRequest;
+import com.abbys.bms.dto.supplier.SupplierDto;
 import com.abbys.bms.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
