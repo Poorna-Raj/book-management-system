@@ -94,6 +94,9 @@ $(document).ready(function() {
                         case "SUPPLIER_MANAGER":
                             window.location.href = '../supplier/supplier.html';
                             break;
+                        case "WAREHOUSE_KEEPER":
+                            window.location.href = '../book/book.html';
+                            break;
                         default:
                             console.log("Invalid Role");
                             break;
