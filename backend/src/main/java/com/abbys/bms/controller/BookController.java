@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.abbys.bms.service.impl.BookService;
+import com.abbys.bms.service.BookService;
 
 import java.util.List;
 
