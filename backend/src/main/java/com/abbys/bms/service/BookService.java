@@ -101,14 +101,31 @@ public class BookService {
     }
 
     private BookResponse mapToDTO(Book book) {
+
         BookResponse dto = new BookResponse();
+
         dto.setBookId(book.getBookId());
         dto.setBookName(book.getBookName());
+        dto.setIssue(book.getIssue());
+        dto.setPages(book.getPages());
+        dto.setVolume(book.getVolume());
+        dto.setIsbn(book.getIsbn());
         dto.setStock(book.getStock());
         dto.setPrice(book.getPrice());
         dto.setStatus(book.getStatus());
         dto.setType(book.getType());
+
+        // relations flattened
+        dto.setInventoryId(book.getInventory().getInventoryId());
+
+        if (book.getSupplier() != null) {
+            dto.setSupplierId(book.getSupplier().getSupplierId());
+        }
+
+        dto.setCreatedById(book.getWarehouseKeeper().getUserId());
         dto.setCreatedBy(book.getWarehouseKeeper().getName());
+
         return dto;
     }
+
 }
