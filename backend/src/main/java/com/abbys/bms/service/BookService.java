@@ -27,14 +27,14 @@ public class BookService {
     public BookResponse createBook(BookCreateRequest dto, int userId) {
 
         WarehouseKeeper keeper = warehouseKeeperRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Warehouse keeper not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Warehouse keeper not found"));
 
         if (keeper.getRole() != Role.WAREHOUSE_KEEPER) {
-            throw new RuntimeException("Access denied: Not a warehouse keeper");
+            throw new IllegalArgumentException("Access denied: Not a warehouse keeper");
         }
 
         Inventory inventory = inventoryRepository.findById(dto.getInventoryId())
-                .orElseThrow(() -> new RuntimeException("Inventory not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Inventory not found"));
 
         Book book = new Book();
         book.setBookName(dto.getBookName());
@@ -51,7 +51,7 @@ public class BookService {
 
         if (dto.getSupplierId() != null) {
             Supplier supplier = supplierRepo.findById(dto.getSupplierId())
-                    .orElseThrow(() -> new RuntimeException("Supplier not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Supplier not found"));
             book.setSupplier(supplier);
         }
 
@@ -61,10 +61,10 @@ public class BookService {
     public BookResponse updateBook(Long bookId, BookUpdateRequest dto, int userId) {
 
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
         if (book.getWarehouseKeeper().getUserId() != userId) {
-            throw new RuntimeException("Only creator can update this book");
+            throw new IllegalArgumentException("Only creator can update this book");
         }
 
         book.setBookName(dto.getBookName());
@@ -77,10 +77,10 @@ public class BookService {
     public void deleteBook(Long bookId, int userId) {
 
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
         if (book.getWarehouseKeeper().getUserId() != userId) {
-            throw new RuntimeException("Only creator can delete this book");
+            throw new IllegalArgumentException("Only creator can delete this book");
         }
 
         bookRepository.delete(book);
@@ -89,7 +89,7 @@ public class BookService {
     public BookResponse getBookById(Long bookId) {
         return mapToDTO(
                 bookRepository.findById(bookId)
-                        .orElseThrow(() -> new RuntimeException("Book not found"))
+                        .orElseThrow(() -> new IllegalArgumentException("Book not found"))
         );
     }
 
