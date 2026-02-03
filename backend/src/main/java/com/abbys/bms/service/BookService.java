@@ -1,0 +1,114 @@
+package com.abbys.bms.service;
+
+import com.abbys.bms.dto.book.BookCreateRequest;
+import com.abbys.bms.dto.book.BookResponse;
+import com.abbys.bms.dto.book.BookUpdateRequest;
+import com.abbys.bms.model.*;
+import com.abbys.bms.model.enums.Role;
+import com.abbys.bms.reposiotory.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class BookService {
+
+    @Autowired
+    private BookRepo bookRepository;
+    @Autowired
+    private WarehouseKeeperRepo warehouseKeeperRepo;
+    @Autowired
+    private InventoryRepo inventoryRepository;
+    @Autowired
+    private SupplierRepo supplierRepo;
+
+    public BookResponse createBook(BookCreateRequest dto, int userId) {
+
+        WarehouseKeeper keeper = warehouseKeeperRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Warehouse keeper not found"));
+
+        if (keeper.getRole() != Role.WAREHOUSE_KEEPER) {
+            throw new RuntimeException("Access denied: Not a warehouse keeper");
+        }
+
+        Inventory inventory = inventoryRepository.findById(dto.getInventoryId())
+                .orElseThrow(() -> new RuntimeException("Inventory not found"));
+
+        Book book = new Book();
+        book.setBookName(dto.getBookName());
+        book.setIssue(dto.getIssue());
+        book.setPages(dto.getPages());
+        book.setVolume(dto.getVolume());
+        book.setStatus(dto.getStatus());
+        book.setType(dto.getType());
+        book.setIsbn(dto.getIsbn());
+        book.setStock(dto.getStock());
+        book.setPrice(dto.getPrice());
+        book.setInventory(inventory);
+        book.setWarehouseKeeper(keeper);
+
+        if (dto.getSupplierId() != null) {
+            Supplier supplier = supplierRepo.findById(dto.getSupplierId())
+                    .orElseThrow(() -> new RuntimeException("Supplier not found"));
+            book.setSupplier(supplier);
+        }
+
+        return mapToDTO(bookRepository.save(book));
+    }
+
+    public BookResponse updateBook(Long bookId, BookUpdateRequest dto, int userId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+
+        if (book.getWarehouseKeeper().getUserId() != userId) {
+            throw new RuntimeException("Only creator can update this book");
+        }
+
+        book.setBookName(dto.getBookName());
+        book.setStock(dto.getStock());
+        book.setPrice(dto.getPrice());
+
+        return mapToDTO(bookRepository.save(book));
+    }
+
+    public void deleteBook(Long bookId, int userId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+
+        if (book.getWarehouseKeeper().getUserId() != userId) {
+            throw new RuntimeException("Only creator can delete this book");
+        }
+
+        bookRepository.delete(book);
+    }
+
+    public BookResponse getBookById(Long bookId) {
+        return mapToDTO(
+                bookRepository.findById(bookId)
+                        .orElseThrow(() -> new RuntimeException("Book not found"))
+        );
+    }
+
+    public List<BookResponse> getAllBooks() {
+        return bookRepository.findAll()
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private BookResponse mapToDTO(Book book) {
+        BookResponse dto = new BookResponse();
+        dto.setBookId(book.getBookId());
+        dto.setBookName(book.getBookName());
+        dto.setStock(book.getStock());
+        dto.setPrice(book.getPrice());
+        dto.setStatus(book.getStatus());
+        dto.setType(book.getType());
+        dto.setCreatedBy(book.getWarehouseKeeper().getName());
+        return dto;
+    }
+}
