@@ -20,12 +20,10 @@ public class UserController {
     private UserService _service;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest req){
-        Optional<User> user = _service.UserLogin(req);
-        if(user.isPresent()){
-            return ResponseEntity.ok(user.get()); // return the user object
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Invalid email or password");
+    public ResponseEntity<?> login(@RequestBody LoginRequest dto) {
+        return _service.userLogin(dto)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body("Invalid credentials"));
     }
+
 }
