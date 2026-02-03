@@ -35,6 +35,14 @@ public class CustomerOrder extends Order{
         this.customer = customer;
     }
 
+    public Cashier getCashier() {
+        return cashier;
+    }
+
+    public void setCashier(Cashier cashier) {
+        this.cashier = cashier;
+    }
+
     public List<Book> getBooks() {
         return books;
     }
