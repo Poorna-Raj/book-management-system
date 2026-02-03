@@ -13,7 +13,6 @@ public class CustomerOrder extends Order{
     private String deadline;
 
     @OneToMany
-    @JoinColumn(name = "order_id", nullable = false)
     private List<Book> books = new ArrayList<>();
 
     @ManyToOne
