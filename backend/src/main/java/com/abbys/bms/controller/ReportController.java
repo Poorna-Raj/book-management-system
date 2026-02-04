@@ -1,6 +1,8 @@
 package com.abbys.bms.controller;
 
+import com.abbys.bms.dto.report.CustomerPurchaseReport;
 import com.abbys.bms.dto.report.InventoryStockReport;
+import com.abbys.bms.dto.report.SupplierPerformanceReport;
 import com.abbys.bms.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,4 +21,10 @@ public class ReportController {
     public List<InventoryStockReport> inventoryStockReport() {
         return _service.getInventoryStockReport();
     }
+
+    @GetMapping("/customer-history")
+    public List<CustomerPurchaseReport> customerPurchaseReports() { return _service.getCustomerReport(); }
+
+    @GetMapping("/supplier-performance")
+    public List<SupplierPerformanceReport> supplierPerformanceReports() { return _service.getSupplierPerformanceReport(); }
 }
