@@ -97,6 +97,9 @@ $(document).ready(function() {
                         case "WAREHOUSE_KEEPER":
                             window.location.href = '../book/book.html';
                             break;
+                        case "CASHIER":
+                            window.location.href = '../order/order.html';
+                            break;
                         default:
                             console.log("Invalid Role");
                             break;
