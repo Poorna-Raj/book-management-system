@@ -16,7 +16,7 @@ public class CustomerOrderRequest {
     private Integer cashierId;
 
     @NotEmpty
-    private List<Long> bookIds; // one ID per copy
+    private List<Long> bookIds;
 
     public String getImportantNote() {
         return importantNote;
