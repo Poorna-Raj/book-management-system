@@ -1,5 +1,6 @@
 package com.abbys.bms.service;
 
+import com.abbys.bms.dto.report.BookSalesReport;
 import com.abbys.bms.dto.report.CustomerPurchaseReport;
 import com.abbys.bms.dto.report.InventoryStockReport;
 import com.abbys.bms.dto.report.SupplierPerformanceReport;
@@ -27,4 +28,8 @@ public class ReportService {
     public List<CustomerPurchaseReport> getCustomerReport(Integer customerId) { return _order.getCustomerPurchaseReport(customerId); }
 
     public List<SupplierPerformanceReport> getSupplierPerformanceReport() { return _supplier.getSupplierPerformanceReport(); }
+
+    public List<BookSalesReport> getBookSalesReports() {
+        return _order.getBookSalesSummary();
+    }
 }

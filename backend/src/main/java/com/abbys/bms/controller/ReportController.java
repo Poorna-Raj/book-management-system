@@ -1,5 +1,6 @@
 package com.abbys.bms.controller;
 
+import com.abbys.bms.dto.report.BookSalesReport;
 import com.abbys.bms.dto.report.CustomerPurchaseReport;
 import com.abbys.bms.dto.report.InventoryStockReport;
 import com.abbys.bms.dto.report.SupplierPerformanceReport;
@@ -28,4 +29,9 @@ public class ReportController {
 
     @GetMapping("/supplier-performance")
     public List<SupplierPerformanceReport> supplierPerformanceReports() { return _service.getSupplierPerformanceReport(); }
+
+    @GetMapping("/book-sales-summary")
+    public List<BookSalesReport> bookSalesSummary() {
+        return _service.getBookSalesReports();
+    }
 }
