@@ -4,6 +4,7 @@ import com.abbys.bms.dto.report.CustomerPurchaseReport;
 import com.abbys.bms.model.CustomerOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface CustomerOrderRepo extends JpaRepository<CustomerOrder,Long> {
         JOIN o.customer c
         JOIN o.cashier ca
         JOIN o.books b
+        WHERE c.customerId = :customerId
     """)
-    List<CustomerPurchaseReport> getCustomerPurchaseReport();
+    List<CustomerPurchaseReport> getCustomerPurchaseReport(
+            @Param("customerId") Integer customerId
+    );
 }
