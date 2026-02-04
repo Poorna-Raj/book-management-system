@@ -32,6 +32,14 @@ public class Inventory {
     )
     private List<Book> books = new ArrayList<>();
 
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     public Long getInventoryId() {
         return inventoryId;
     }
