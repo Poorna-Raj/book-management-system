@@ -156,8 +156,8 @@ function displayBooks(data) {
     
     data.forEach(book => {
         const statusClass = book.status ? book.status.toLowerCase().replace(/_/g, '_') : 'available';
-        const inventoryName = book.inventory ? (book.inventory.inventoryName || `Inv #${book.inventory.inventoryId}`) : 'N/A';
-        const supplierName = book.supplier ? book.supplier.companyName : 'N/A';
+        const inventoryName = book.inventoryId ? (book.inventoryId || `Inv #${book.inventoryId}`) : 'N/A';
+        const supplierName = book.supplierId ? book.supplierId : 'N/A';
         
         // Safely handle potentially null/undefined values
         const bookId = book.bookId || 'N/A';
@@ -268,14 +268,14 @@ function openEditModal(bookId) {
         $('#price').val(book.price !== undefined && book.price !== null ? book.price : '');
         
         // Set inventory and supplier
-        if (book.inventory && book.inventory.inventoryId) {
-            $('#inventoryId').val(book.inventory.inventoryId);
+        if (book.inventoryId) {
+            $('#inventoryId').val(book.inventoryId);
         } else {
             $('#inventoryId').val('');
         }
         
-        if (book.supplier && book.supplier.supplierId) {
-            $('#supplierId').val(book.supplier.supplierId);
+        if (book.supplierId) {
+            $('#supplierId').val(book.supplierId);
         } else {
             $('#supplierId').val('');
         }
