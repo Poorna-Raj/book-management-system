@@ -24,7 +24,7 @@ public class ReportService {
         return _inventory.getInventoryStockReport();
     }
 
-    public List<CustomerPurchaseReport> getCustomerReport() { return _order.getCustomerPurchaseReport(); }
+    public List<CustomerPurchaseReport> getCustomerReport(Integer customerId) { return _order.getCustomerPurchaseReport(customerId); }
 
     public List<SupplierPerformanceReport> getSupplierPerformanceReport() { return _supplier.getSupplierPerformanceReport(); }
 }

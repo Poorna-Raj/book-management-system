@@ -6,6 +6,7 @@ import com.abbys.bms.dto.report.SupplierPerformanceReport;
 import com.abbys.bms.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +23,8 @@ public class ReportController {
         return _service.getInventoryStockReport();
     }
 
-    @GetMapping("/customer-history")
-    public List<CustomerPurchaseReport> customerPurchaseReports() { return _service.getCustomerReport(); }
+    @GetMapping("/customer-history/{id}")
+    public List<CustomerPurchaseReport> customerPurchaseReports(@PathVariable Integer id) { return _service.getCustomerReport(id); }
 
     @GetMapping("/supplier-performance")
     public List<SupplierPerformanceReport> supplierPerformanceReports() { return _service.getSupplierPerformanceReport(); }
