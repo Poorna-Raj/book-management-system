@@ -51,4 +51,17 @@ public class CustomerOrderController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateOrder(
+            @PathVariable Long id,
+            @Valid @RequestBody CustomerOrderRequest dto) {
+
+        try {
+            return ResponseEntity.ok(orderService.updateOrder(id, dto));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
 }

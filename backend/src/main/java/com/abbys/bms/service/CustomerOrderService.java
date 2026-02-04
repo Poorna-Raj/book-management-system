@@ -92,6 +92,49 @@ public class CustomerOrderService {
         orderRepository.delete(order);
     }
 
+    public CustomerOrderResponse updateOrder(Long orderId, CustomerOrderRequest dto) {
+
+        CustomerOrder order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+        Customer customer = customerRepository.findById(dto.getCustomerId())
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+
+        Cashier cashier = cashierRepository.findById(dto.getCashierId())
+                .orElseThrow(() -> new IllegalArgumentException("Cashier not found"));
+
+        for (Book book : order.getBooks()) {
+            book.setStock(book.getStock() + 1);
+            bookRepository.save(book);
+        }
+
+        List<Book> updatedBooks = new ArrayList<>();
+
+        for (Long bookId : dto.getBookIds()) {
+            Book book = bookRepository.findById(bookId)
+                    .orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+            if (book.getStock() <= 0) {
+                throw new IllegalArgumentException(
+                        "Book out of stock: " + book.getBookName()
+                );
+            }
+
+            book.setStock(book.getStock() - 1);
+            bookRepository.save(book);
+            updatedBooks.add(book);
+        }
+
+        order.setImportantNote(dto.getImportantNote());
+        order.setDeadline(dto.getDeadline());
+        order.setCustomer(customer);
+        order.setCashier(cashier);
+        order.setBooks(updatedBooks);
+
+        return mapToDTO(orderRepository.save(order));
+    }
+
+
     private CustomerOrderResponse mapToDTO(CustomerOrder order) {
 
         CustomerOrderResponse dto = new CustomerOrderResponse();
