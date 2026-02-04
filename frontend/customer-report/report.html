@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Purchase History - Book Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header no-print">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon-small">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Customer Purchase History</h1>
+                    <p>Book Management System</p>
+                </div>
+            </div>
+            <div class="user-section">
+                <a href="../customer/customer.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i> Back to Customers
+                </a>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">User</span>
+                        <span class="user-role" id="userRole">USER</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Customer Selection -->
+        <div class="selection-card no-print">
+            <div class="selection-header">
+                <h2><i class="fas fa-user-circle"></i> Select Customer</h2>
+            </div>
+            <div class="selection-body">
+                <div class="form-group">
+                    <label for="customerSelect" class="form-label">
+                        <i class="fas fa-users"></i> Choose a customer to view purchase history
+                    </label>
+                    <select id="customerSelect" class="form-input">
+                        <option value="">Loading customers...</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="loadCustomerReport()" id="loadReportBtn">
+                    <i class="fas fa-search"></i> View Purchase History
+                </button>
+            </div>
+        </div>
+
+        <!-- Action Bar (Hidden initially) -->
+        <div class="action-bar no-print" id="actionBar" style="display: none;">
+            <div class="report-info">
+                <h2><i class="fas fa-shopping-bag"></i> Purchase History Report</h2>
+                <p class="report-date">Generated on: <span id="reportDate"></span></p>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+                <button class="btn btn-primary" onclick="exportToPDF()">
+                    <i class="fas fa-file-pdf"></i> Export to PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading-container" id="loadingIndicator" style="display: none;">
+            <div class="spinner-large"></div>
+            <p>Loading purchase history...</p>
+        </div>
+
+        <!-- Customer Info Card -->
+        <div class="customer-info-card" id="customerInfoCard" style="display: none;">
+            <div class="customer-header">
+                <div class="customer-avatar-large">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="customer-details-large">
+                    <h2 id="customerNameDisplay"></h2>
+                    <div class="customer-meta">
+                        <span><i class="fas fa-envelope"></i> <span id="customerEmailDisplay"></span></span>
+                        <span><i class="fas fa-phone"></i> <span id="customerContactDisplay"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="customer-stats">
+                <div class="stat-box">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon green">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalBooks">0</h3>
+                        <p>Books Purchased</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalSpent">$0.00</h3>
+                        <p>Total Spent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders List -->
+        <div class="orders-container" id="ordersContainer" style="display: none;">
+            <!-- Order cards will be dynamically generated here -->
+        </div>
+
+        <!-- No Data Message -->
+        <div class="no-data-card" id="noDataCard" style="display: none;">
+            <i class="fas fa-shopping-bag"></i>
+            <h3>No Purchase History Found</h3>
+            <p>This customer hasn't made any purchases yet.</p>
+        </div>
+
+        <!-- Print Header (Only visible when printing) -->
+        <div class="print-header">
+            <div class="print-logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Book Management System</h1>
+            </div>
+            <h2>Customer Purchase History Report</h2>
+            <p class="print-date">Generated on: <span id="printDate"></span></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
