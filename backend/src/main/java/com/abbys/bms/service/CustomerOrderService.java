@@ -4,6 +4,7 @@ import com.abbys.bms.dto.*;
 import com.abbys.bms.dto.customerOrder.CustomerOrderRequest;
 import com.abbys.bms.dto.customerOrder.CustomerOrderResponse;
 import com.abbys.bms.model.*;
+import com.abbys.bms.model.enums.OrderStatus;
 import com.abbys.bms.reposiotory.BookRepo;
 import com.abbys.bms.reposiotory.CashierRepo;
 import com.abbys.bms.reposiotory.CustomerOrderRepo;
@@ -40,28 +41,32 @@ public class CustomerOrderService {
         order.setCashier(cashier);
 
         List<Book> books = new ArrayList<>();
+        double totalPrice = 0.0;
 
         for (Long bookId : dto.getBookIds()) {
             Book book = bookRepository.findById(bookId)
                     .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
             if (book.getStock() <= 0) {
-                throw new IllegalArgumentException(
-                        "Book out of stock: " + book.getBookName()
-                );
+                throw new IllegalArgumentException("Book out of stock: " + book.getBookName());
             }
 
             book.setStock(book.getStock() - 1);
             bookRepository.save(book);
 
             books.add(book);
+            totalPrice += book.getPrice();
         }
 
         order.setBooks(books);
-        CustomerOrder savedOrder = orderRepository.save(order);
+        order.setTotalPrice(totalPrice);
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setCreatedDate(java.time.LocalDate.now().toString());
 
+        CustomerOrder savedOrder = orderRepository.save(order);
         return mapToDTO(savedOrder);
     }
+
 
     public CustomerOrderResponse getOrderById(Long id) {
         return mapToDTO(
@@ -109,6 +114,7 @@ public class CustomerOrderService {
         }
 
         List<Book> updatedBooks = new ArrayList<>();
+        double totalPrice = 0.0;
 
         for (Long bookId : dto.getBookIds()) {
             Book book = bookRepository.findById(bookId)
@@ -122,7 +128,9 @@ public class CustomerOrderService {
 
             book.setStock(book.getStock() - 1);
             bookRepository.save(book);
+
             updatedBooks.add(book);
+            totalPrice += book.getPrice();
         }
 
         order.setImportantNote(dto.getImportantNote());
@@ -130,9 +138,12 @@ public class CustomerOrderService {
         order.setCustomer(customer);
         order.setCashier(cashier);
         order.setBooks(updatedBooks);
+        order.setTotalPrice(totalPrice);
 
-        return mapToDTO(orderRepository.save(order));
+        CustomerOrder savedOrder = orderRepository.save(order);
+        return mapToDTO(savedOrder);
     }
+
 
 
     private CustomerOrderResponse mapToDTO(CustomerOrder order) {
