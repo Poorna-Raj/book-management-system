@@ -67,12 +67,30 @@ public class BookService {
             throw new IllegalArgumentException("Only creator can update this book");
         }
 
+        Inventory inventory = inventoryRepository.findById(dto.getInventoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Inventory not found"));
+
+        Supplier supplier = null;
+        if (dto.getSupplierId() != null) {
+            supplier = supplierRepo.findById(dto.getSupplierId())
+                    .orElseThrow(() -> new IllegalArgumentException("Supplier not found"));
+        }
+
         book.setBookName(dto.getBookName());
+        book.setIsbn(dto.getIsbn());
+        book.setType(dto.getType());
+        book.setStatus(dto.getStatus());
+        book.setIssue(dto.getIssue());
+        book.setVolume(dto.getVolume());
+        book.setPages(dto.getPages());
         book.setStock(dto.getStock());
         book.setPrice(dto.getPrice());
+        book.setInventory(inventory);
+        book.setSupplier(supplier);
 
         return mapToDTO(bookRepository.save(book));
     }
+
 
     public void deleteBook(Long bookId, int userId) {
 
