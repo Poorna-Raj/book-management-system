@@ -12,7 +12,12 @@ public class CustomerOrder extends Order{
 
     private String deadline;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "tbl_order_books",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> books = new ArrayList<>();
 
     @ManyToOne
