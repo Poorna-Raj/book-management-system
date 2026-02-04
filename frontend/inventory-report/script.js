@@ -206,7 +206,6 @@ function createInventorySection(inventoryTitle, books) {
             <tr>
                 <th>Book Name</th>
                 <th>ISBN</th>
-                <th>Type</th>
                 <th>Status</th>
                 <th>Stock</th>
                 <th>Price</th>
@@ -226,7 +225,6 @@ function createInventorySection(inventoryTitle, books) {
             <tr>
                 <td><strong>${book.bookName || 'N/A'}</strong></td>
                 <td>${book.isbn || 'N/A'}</td>
-                <td><span class="type-badge">${book.type || 'N/A'}</span></td>
                 <td><span class="status-badge ${statusClass}">${formatStatus(book.status)}</span></td>
                 <td><strong>${book.stock !== undefined ? book.stock : 'N/A'}</strong></td>
                 <td>$${book.price !== undefined ? book.price.toFixed(2) : 'N/A'}</td>
@@ -324,7 +322,6 @@ function exportToPDF() {
         const tableData = books.map(book => [
             book.bookName || 'N/A',
             book.isbn || 'N/A',
-            (book.type || 'N/A').substring(0, 10),
             formatStatus(book.status),
             book.stock !== undefined ? book.stock.toString() : 'N/A',
             book.price !== undefined ? '$' + book.price.toFixed(2) : 'N/A',
@@ -335,7 +332,7 @@ function exportToPDF() {
         // Add table
         doc.autoTable({
             startY: yPosition,
-            head: [['Book Name', 'ISBN', 'Type', 'Status', 'Stock', 'Price', 'Supplier', 'Keeper']],
+            head: [['Book Name', 'ISBN', 'Status', 'Stock', 'Price', 'Supplier', 'Keeper']],
             body: tableData,
             theme: 'grid',
             headStyles: {
