@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Performance Report - Book Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header no-print">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon-small">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Supplier Performance Report</h1>
+                    <p>Book Management System</p>
+                </div>
+            </div>
+            <div class="user-section">
+                <a href="../supplier/supplier.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i> Back to Suppliers
+                </a>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">User</span>
+                        <span class="user-role" id="userRole">USER</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Action Bar -->
+        <div class="action-bar no-print">
+            <div class="report-info">
+                <h2><i class="fas fa-chart-line"></i> Supplier Performance Analysis</h2>
+                <p class="report-date">Generated on: <span id="reportDate"></span></p>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+                <button class="btn btn-primary" onclick="exportToPDF()">
+                    <i class="fas fa-file-pdf"></i> Export to PDF
+                </button>
+                <button class="btn btn-success" onclick="loadReport()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading-container" id="loadingIndicator">
+            <div class="spinner-large"></div>
+            <p>Loading performance data...</p>
+        </div>
+
+        <!-- Report Summary Cards -->
+        <div class="summary-cards no-print" id="summaryCards" style="display: none;">
+            <div class="summary-card">
+                <div class="card-icon blue">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="card-content">
+                    <h3 id="totalSuppliers">0</h3>
+                    <p>Total Suppliers</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon green">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="card-content">
+                    <h3 id="totalBooksSupplied">0</h3>
+                    <p>Total Books Supplied</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon purple">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="card-content">
+                    <h3 id="totalStockSupplied">0</h3>
+                    <p>Total Stock Units</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon orange">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="card-content">
+                    <h3 id="avgPrice">$0.00</h3>
+                    <p>Average Book Price</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Content -->
+        <div class="report-content" id="reportContent">
+            <!-- Performance cards will be dynamically generated here -->
+        </div>
+
+        <!-- Print Header (Only visible when printing) -->
+        <div class="print-header">
+            <div class="print-logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Book Management System</h1>
+            </div>
+            <h2>Supplier Performance Report</h2>
+            <p class="print-date">Generated on: <span id="printDate"></span></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
