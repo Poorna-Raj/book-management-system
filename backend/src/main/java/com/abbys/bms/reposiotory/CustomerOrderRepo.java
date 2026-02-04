@@ -1,5 +1,6 @@
 package com.abbys.bms.reposiotory;
 
+import com.abbys.bms.dto.report.BookSalesReport;
 import com.abbys.bms.dto.report.CustomerPurchaseReport;
 import com.abbys.bms.model.CustomerOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,16 @@ public interface CustomerOrderRepo extends JpaRepository<CustomerOrder,Long> {
     List<CustomerPurchaseReport> getCustomerPurchaseReport(
             @Param("customerId") Integer customerId
     );
+
+    @Query("""
+        SELECT new com.abbys.bms.dto.report.BookSalesReport(
+            b.type,
+            COUNT(b.bookId),
+            SUM(b.price)
+        )
+        FROM CustomerOrder o
+        JOIN o.books b
+        GROUP BY b.type
+    """)
+    List<BookSalesReport> getBookSalesSummary();
 }
