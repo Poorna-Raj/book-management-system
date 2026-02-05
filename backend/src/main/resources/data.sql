@@ -14,8 +14,8 @@ VALUES
 
 INSERT INTO tbl_users (email, password, name, contact_number, bank_number, bank_name, role)
 VALUES ('supplier@bms.com', 'supplier123', 'Tom Brady', '0775734587', '93748737890', 'BAC Bank', 'SUPPLIER_MANAGER');
-INSERT INTO tbl_supplier_manager (user_id, supplier_manager_id, working_hours, shift, on_duty)
-VALUES (2, 'SM001', '9AM-5PM', 'FULL', TRUE);
+INSERT INTO tbl_supplier_manager (user_id, supplier_manager_id, note, shift, age)
+VALUES (2, 'SM001', 'Online', 'FULL', 36);
 
 INSERT INTO tbl_suppliers (company_name, contractor_name, supplier_address, contractor_nic, contractor_contact, company_email, gender, manager_id)
 VALUES

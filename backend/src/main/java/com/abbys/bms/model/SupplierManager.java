@@ -12,12 +12,12 @@ public class SupplierManager extends User{
     @Column(unique = true)
     private String supplierManagerId;
 
-    private String workingHours;
+    private int age;
 
     @Enumerated(EnumType.STRING)
     private Shift shift;
 
-    private boolean onDuty;
+    private String note;
 
     @OneToMany(mappedBy = "manager")
     private List<Supplier> suppliers = new ArrayList<>();
