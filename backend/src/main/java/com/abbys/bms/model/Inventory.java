@@ -2,6 +2,7 @@ package com.abbys.bms.model;
 
 import com.abbys.bms.model.enums.InventoryStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,8 @@ public class Inventory {
     @Column(nullable = false)
     private String inventoryTitle;
 
-    @Column(nullable = false)
-    private int totalBooks;
+    @Formula("(SELECT COUNT(*) FROM tbl_book b WHERE b.inventory_id = inventory_id)")
+    private int totalBooks;;
 
     @Enumerated(EnumType.STRING)
     private InventoryStatus status;
@@ -58,10 +59,6 @@ public class Inventory {
 
     public int getTotalBooks() {
         return totalBooks;
-    }
-
-    public void setTotalBooks(int totalBooks) {
-        this.totalBooks = totalBooks;
     }
 
     public InventoryStatus getStatus() {

@@ -49,12 +49,12 @@ public class SupplierManager extends User{
         this.supplierManagerId = supplierManagerId;
     }
 
-    public String getWorkingHours() {
-        return workingHours;
+    public String getNote() {
+        return note;
     }
 
-    public void setWorkingHours(String workingHours) {
-        this.workingHours = workingHours;
+    public void setWorkingHours(String note) {
+        this.note = note;
     }
 
     public Shift getShift() {
@@ -65,11 +65,15 @@ public class SupplierManager extends User{
         this.shift = shift;
     }
 
-    public boolean isOnDuty() {
-        return onDuty;
+    public int getAge() {
+        return age;
     }
 
-    public void setOnDuty(boolean onDuty) {
-        this.onDuty = onDuty;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

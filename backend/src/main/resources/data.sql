@@ -49,13 +49,13 @@ INSERT INTO tbl_cashier
 VALUES
 (4, 'CASH001', '8AM-4PM', 'FULL', TRUE);
 
-INSERT INTO tbl_inventory (inventory_title, total_books, status, note)
+INSERT INTO tbl_inventory (inventory_title, status, note)
 VALUES
-('Fiction Central', 150, 'AVAILABLE', 'Main fiction collection'),
-('Academic Science', 200, 'AVAILABLE', 'Textbooks and journals'),
-('Archive - 2025', 50, 'AVAILABLE', 'Rare and old editions'),
-('Children’s Corner', 120, 'AVAILABLE', 'Illustrated books'),
-('Reference Wing', 80, 'AVAILABLE', 'Dictionaries and encyclopedias');
+('Fiction Central','AVAILABLE', 'Main fiction collection'),
+('Academic Science', 'AVAILABLE', 'Textbooks and journals'),
+('Archive - 2025', 'AVAILABLE', 'Rare and old editions'),
+('Children’s Corner', 'AVAILABLE', 'Illustrated books'),
+('Reference Wing', 'AVAILABLE', 'Dictionaries and encyclopedias');
 
 INSERT INTO tbl_book (book_name, issue, pages, volume, status, type, isbn, stock, price, supplier_id, inventory_id, warehouse_keeper_id)
 VALUES
