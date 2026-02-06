@@ -136,6 +136,7 @@ function loadCustomerReport() {
 }
 
 // Display customer information
+// Display customer information
 function displayCustomerInfo(data) {
     $('#customerNameDisplay').text(currentCustomer.customerName);
     $('#customerEmailDisplay').text(currentCustomer.email);
@@ -144,7 +145,15 @@ function displayCustomerInfo(data) {
     // Calculate statistics
     const uniqueOrders = new Set(data.map(item => item.orderId)).size;
     const totalBooks = data.length;
-    const totalSpent = data.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+    
+    // FIX: Calculate total spent by getting unique orders first
+    const orderTotals = new Map();
+    data.forEach(item => {
+        if (!orderTotals.has(item.orderId)) {
+            orderTotals.set(item.orderId, item.totalPrice || 0);
+        }
+    });
+    const totalSpent = Array.from(orderTotals.values()).reduce((sum, price) => sum + price, 0);
     
     $('#totalOrders').text(uniqueOrders);
     $('#totalBooks').text(totalBooks);
@@ -298,25 +307,65 @@ function exportToPDF() {
     // Calculate statistics
     const uniqueOrders = new Set(reportData.map(item => item.orderId)).size;
     const totalBooks = reportData.length;
-    const totalSpent = reportData.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+    
+    // Calculate total spent by getting unique orders first
+    const orderTotals = new Map();
+    reportData.forEach(item => {
+        if (!orderTotals.has(item.orderId)) {
+            orderTotals.set(item.orderId, item.totalPrice || 0);
+        }
+    });
+    const totalSpent = Array.from(orderTotals.values()).reduce((sum, price) => sum + price, 0);
     
     doc.setFontSize(10);
     doc.setTextColor(107, 114, 128);
     doc.text(`Total Orders: ${uniqueOrders} | Books Purchased: ${totalBooks} | Total Spent: $${totalSpent.toFixed(2)}`, 14, 78);
     
-    // Prepare table data
-    const tableData = reportData.map((item, index) => [
-        item.orderId,
-        item.bookName || 'N/A',
-        '$' + (item.totalPrice || 0).toFixed(2),
-        formatStatus(item.orderStatus),
-        item.cashierName || 'N/A'
-    ]);
+    // Prepare table data - GROUP BY ORDER
+    const tableData = [];
+    const orderMap = new Map();
+    
+    // Group books by order
+    reportData.forEach(item => {
+        if (!orderMap.has(item.orderId)) {
+            orderMap.set(item.orderId, {
+                orderId: item.orderId,
+                totalPrice: item.totalPrice,
+                orderStatus: item.orderStatus,
+                cashierName: item.cashierName,
+                books: []
+            });
+        }
+        orderMap.get(item.orderId).books.push(item.bookName);
+    });
+    
+    // Create table rows
+    orderMap.forEach((order, orderId) => {
+        // First row for the order with all details
+        tableData.push([
+            orderId,
+            order.books[0] || 'N/A',
+            '$' + (order.totalPrice || 0).toFixed(2),
+            formatStatus(order.orderStatus),
+            order.cashierName || 'N/A'
+        ]);
+        
+        // Additional rows for remaining books (without repeating order details)
+        for (let i = 1; i < order.books.length; i++) {
+            tableData.push([
+                '', // Empty order ID
+                order.books[i],
+                '', // Empty price
+                '', // Empty status
+                '' // Empty cashier
+            ]);
+        }
+    });
     
     // Add table
     doc.autoTable({
         startY: 85,
-        head: [['Order ID', 'Book Name', 'Price', 'Status', 'Cashier']],
+        head: [['Order ID', 'Book Name', 'Order Total', 'Status', 'Cashier']],
         body: tableData,
         theme: 'grid',
         headStyles: {
