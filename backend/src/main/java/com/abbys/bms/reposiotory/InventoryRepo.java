@@ -16,12 +16,12 @@ public interface InventoryRepo extends JpaRepository<Inventory,Long> {
             b.stock,
             b.price,
             s.companyName,
-            wk.name
+            wm.name
         )
         FROM Inventory i
         JOIN i.books b
         LEFT JOIN b.supplier s
-        LEFT JOIN b.warehouseKeeper wk
+        LEFT JOIN b.warehouseManager wm
     """)
     List<InventoryStockReport> getInventoryStockReport();
 }

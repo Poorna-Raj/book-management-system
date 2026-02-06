@@ -18,7 +18,7 @@ public class BookService {
     @Autowired
     private BookRepo bookRepository;
     @Autowired
-    private WarehouseKeeperRepo warehouseKeeperRepo;
+    private WarehouseManagerRepo warehouseManagerRepo;
     @Autowired
     private InventoryRepo inventoryRepository;
     @Autowired
@@ -26,11 +26,11 @@ public class BookService {
 
     public BookResponse createBook(BookCreateRequest dto, int userId) {
 
-        WarehouseKeeper keeper = warehouseKeeperRepo.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse keeper not found"));
+        WarehouseManager manager = warehouseManagerRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Warehouse manager not found"));
 
-        if (keeper.getRole() != Role.WAREHOUSE_KEEPER) {
-            throw new IllegalArgumentException("Access denied: Not a warehouse keeper");
+        if (manager.getRole() != Role.WAREHOUSE_MANAGER) {
+            throw new IllegalArgumentException("Access denied: Not a warehouse manager");
         }
 
         Inventory inventory = inventoryRepository.findById(dto.getInventoryId())
@@ -47,7 +47,7 @@ public class BookService {
         book.setStock(dto.getStock());
         book.setPrice(dto.getPrice());
         book.setInventory(inventory);
-        book.setWarehouseKeeper(keeper);
+        book.setWarehouseManager(manager);
 
         if (dto.getSupplierId() != null) {
             Supplier supplier = supplierRepo.findById(dto.getSupplierId())
@@ -63,7 +63,7 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-        if (book.getWarehouseKeeper().getUserId() != userId) {
+        if (book.getWarehouseManager().getUserId() != userId) {
             throw new IllegalArgumentException("Only creator can update this book");
         }
 
@@ -97,7 +97,7 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-        if (book.getWarehouseKeeper().getUserId() != userId) {
+        if (book.getWarehouseManager().getUserId() != userId) {
             throw new IllegalArgumentException("Only creator can delete this book");
         }
 
@@ -140,8 +140,8 @@ public class BookService {
             dto.setSupplierId(book.getSupplier().getSupplierId());
         }
 
-        dto.setCreatedById(book.getWarehouseKeeper().getUserId());
-        dto.setCreatedBy(book.getWarehouseKeeper().getName());
+        dto.setCreatedById(book.getWarehouseManager().getUserId());
+        dto.setCreatedBy(book.getWarehouseManager().getName());
 
         return dto;
     }
