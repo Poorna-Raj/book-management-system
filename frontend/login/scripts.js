@@ -94,7 +94,7 @@ $(document).ready(function() {
                         case "SUPPLIER_MANAGER":
                             window.location.href = '../supplier/supplier.html';
                             break;
-                        case "WAREHOUSE_KEEPER":
+                        case "WAREHOUSE_MANAGER":
                             window.location.href = '../book/book.html';
                             break;
                         case "CASHIER":
