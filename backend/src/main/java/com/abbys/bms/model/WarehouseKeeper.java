@@ -13,26 +13,9 @@ public class WarehouseKeeper extends User{
 
     private boolean onDuty;
 
-    @OneToMany(mappedBy = "warehouseKeeper")
-    private List<Book> books = new ArrayList<>();
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    public void addBook(Book book) {
-        books.add(book);
-        book.setWarehouseKeeper(this);
-    }
-
-    public void removeBook(Book book) {
-        books.remove(book);
-        book.setWarehouseKeeper(null);
-    }
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private WarehouseManager manager;
 
     public String getWarehouseStaffId() {
         return warehouseStaffId;
@@ -48,5 +31,13 @@ public class WarehouseKeeper extends User{
 
     public void setOnDuty(boolean onDuty) {
         this.onDuty = onDuty;
+    }
+
+    public WarehouseManager getManager() {
+        return manager;
+    }
+
+    public void setManager(WarehouseManager manager) {
+        this.manager = manager;
     }
 }
