@@ -32,8 +32,8 @@ public class Book {
     private double price;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_keeper_id", nullable = true)
-    private WarehouseKeeper warehouseKeeper;
+    @JoinColumn(name = "warehouse_manager_id")
+    private WarehouseManager warehouseManager;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = true)
@@ -59,12 +59,12 @@ public class Book {
         this.supplier = supplier;
     }
 
-    public WarehouseKeeper getWarehouseKeeper() {
-        return warehouseKeeper;
+    public WarehouseManager getWarehouseManager() {
+        return warehouseManager;
     }
 
-    public void setWarehouseKeeper(WarehouseKeeper warehouseKeeper) {
-        this.warehouseKeeper = warehouseKeeper;
+    public void setWarehouseManager(WarehouseManager warehouseManager) {
+        this.warehouseManager = warehouseManager;
     }
 
     public Long getBookId() {
