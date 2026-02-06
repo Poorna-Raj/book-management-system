@@ -5,4 +5,5 @@ public enum Role {
     SUPPLIER_MANAGER,
     WAREHOUSE_KEEPER,
     CASHIER,
+    WAREHOUSE_MANAGER,
 }
